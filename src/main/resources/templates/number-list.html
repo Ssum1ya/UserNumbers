@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+</head>
+<body>
+    <section>
+        <div class="container">
+            <a class="btn btn-success" th:href="@{userNumber/addPage}">Добавить номер</a>
+            <h2>Сортировка</h2>
+            <form th:action="@{/userNumber/select}" method="get" th:object="${userNumber}">
+                <div class = "mb-3">
+                    <label for="name" class="form-label">Имя:</label>
+                    <input type="text" th:field="*{name}" id = "name" class="form-control"> <br>
+                    <span class="validationError"
+                        th:if="${#fields.hasErrors('name')}"
+                        th:errors="*{name}">deliveryState Error</span>
+                </div>
+                <div class = "mb-3">
+                    <label for="description">номер:</label>
+                    <textarea id="description" th:field="*{number}" class="form-control"></textarea> <br>
+                    <span class="validationError"
+                        th:if="${#fields.hasErrors('number')}"
+                        th:errors="*{number}">deliveryState Error</span>
+                </div>
+                <button type="submit" class="btn btn-outline-success">Отсортировать</button>
+            </form>
+            <table class = "mt-3 table table-bordered">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Имя</th>
+                    <th>Номер</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="userNumber : ${userNumbers}">
+                    <td th:text="${userNumber.id}"></td>
+                    <td th:text="${userNumber.name}"></td>
+                    <td th:text="${userNumber.number}"></td>
+                    <td>
+                        <a class = "btn btn-info" th:href="@{/userNumber/update/{id}(id=${userNumber.id})}">Редактировать</a>
+                        <a class = "btn btn-danger" th:href="@{/userNumber/delete/{id}(id=${userNumber.id})}">Удалить</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+</body>
+</html>

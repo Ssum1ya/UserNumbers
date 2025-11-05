@@ -1,0 +1,35 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+</head>
+<body>
+<section>
+    <div class="container">
+        <h2 th:text="${userNumber.id == null} ? 'Добавить номер' : 'Редактировать номер'"></h2>
+        <form th:action="@{/userNumber/add}" class="mb-3" th:object="${userNumber}" method="post">
+            <input type="hidden" th:field="*{id}" />
+            <div class = "mb-3">
+                <label for="name" class="form-label">Имя:</label>
+                <input type="text" th:field="*{name}" id = "name" class="form-control" th:value="${name}"> <br>
+                <span class="validationError"
+                      th:if="${#fields.hasErrors('name')}"
+                      th:errors="*{name}">deliveryState Error</span>
+            </div>
+            <div class = "mb-3">
+                <label for="description">номер:</label>
+                <textarea id="description" th:field="*{number}" class="form-control" th:value="${number}"></textarea> <br>
+                <span class="validationError"
+                      th:if="${#fields.hasErrors('number')}"
+                      th:errors="*{number}">deliveryState Error</span>
+            </div>
+            <button type="submit" class="btn btn-outline-success">Сохранить</button>
+        </form>
+        <a th:href="@{/}" class="btn btn-outline-primary">Назад к списку</a>
+    </div>
+</section>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+</body>
+</html>
