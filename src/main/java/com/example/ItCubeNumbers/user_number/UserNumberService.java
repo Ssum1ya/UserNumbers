@@ -31,11 +31,11 @@ public class UserNumberService {
     }
 
     public List<UserNumber> findUserNumbersSort(User user, UserNumber userNumber) {
-        if (!userNumber.getNumber().equals("") && !userNumber.getName().equals("")) {
+        if (!"".equals(userNumber.getNumber()) && !"".equals(userNumber.getName())) {
             return userNumberRepository.findAllByUserAndNumberAndName(user, userNumber.getNumber(), userNumber.getName());
-        } else if (!userNumber.getNumber().equals("")) {
+        } else if (!"".equals(userNumber.getNumber())) {
             return userNumberRepository.findAllByUserAndNumber(user, userNumber.getNumber());
-        } else if (!userNumber.getName().equals("")) {
+        } else if (!"".equals(userNumber.getName())) {
             return userNumberRepository.findAllByUserAndName(user, userNumber.getName());
         }
         return userNumberRepository.findAllByUser(user);
