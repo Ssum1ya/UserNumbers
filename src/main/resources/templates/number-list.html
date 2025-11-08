@@ -10,6 +10,7 @@
     <section>
         <div class="container">
             <a class="btn btn-success" th:href="@{userNumber/addPage}">Добавить номер</a>
+            <a class="btn btn-danger" th:href="@{/login?logout}">Выйти из аккаунта</a>
             <h2>Сортировка</h2>
             <form th:action="@{/userNumber/select}" method="get" th:object="${userNumber}">
                 <div class = "mb-3">

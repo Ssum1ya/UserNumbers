@@ -1,5 +1,6 @@
-package com.example.ItCubeNumbers;
+package com.example.ItCubeNumbers.user_number;
 
+import com.example.ItCubeNumbers.users.User;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,8 +14,8 @@ public class UserNumberService {
         this.userNumberRepository = userNumberRepository;
     }
 
-    public List<UserNumber> findAllUserNumbers() {
-        return userNumberRepository.findAll();
+    public List<UserNumber> findAllByUser(User user) {
+        return userNumberRepository.findAllByUser(user);
     }
 
     public void deleteUserNumber(Long id) {
@@ -29,14 +30,14 @@ public class UserNumberService {
         userNumberRepository.save(userNumber);
     }
 
-    public List<UserNumber> findUserNumbersSort(UserNumber userNumber) {
+    public List<UserNumber> findUserNumbersSort(User user, UserNumber userNumber) {
         if (!userNumber.getNumber().equals("") && !userNumber.getName().equals("")) {
-            return userNumberRepository.findByNumberAndName(userNumber.getNumber(), userNumber.getName());
+            return userNumberRepository.findAllByUserAndNumberAndName(user, userNumber.getNumber(), userNumber.getName());
         } else if (!userNumber.getNumber().equals("")) {
-            return userNumberRepository.findAllByNumber(userNumber.getNumber());
+            return userNumberRepository.findAllByUserAndNumber(user, userNumber.getNumber());
         } else if (!userNumber.getName().equals("")) {
-            return userNumberRepository.findAllByName(userNumber.getName());
+            return userNumberRepository.findAllByUserAndName(user, userNumber.getName());
         }
-        return userNumberRepository.findAll();
+        return userNumberRepository.findAllByUser(user);
     }
 }

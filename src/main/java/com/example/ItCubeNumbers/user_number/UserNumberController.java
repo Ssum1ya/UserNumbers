@@ -1,6 +1,8 @@
-package com.example.ItCubeNumbers;
+package com.example.ItCubeNumbers.user_number;
 
+import com.example.ItCubeNumbers.users.User;
 import jakarta.validation.Valid;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -17,31 +19,31 @@ public class UserNumberController {
     }
 
     @GetMapping("/select")
-    public String selectNumbers(@ModelAttribute("userNumber") UserNumber userNumber, Model model) {
-        model.addAttribute("userNumbers", userNumberService.findUserNumbersSort(userNumber));
+    public String selectNumbers(@AuthenticationPrincipal User user, @ModelAttribute("userNumber") UserNumber userNumber, Model model) {
+        model.addAttribute("userNumbers", userNumberService.findUserNumbersSort(user, userNumber));
         return "number-list.html";
     }
 
     @PostMapping("/add")
-    public String addNumber(@ModelAttribute("userNumber") @Valid UserNumber userNumber, Errors errors, Model model) {
+    public String addNumber(@AuthenticationPrincipal User user, @ModelAttribute("userNumber") @Valid UserNumber userNumber, Errors errors) {
         if (errors.hasErrors()) {
             return "userNumber-form.html";
         }
+        userNumber.setUser(user);
         userNumberService.addUserNumber(userNumber);
-        return "redirect:/";
+        return "redirect:/home";
     }
 
     @GetMapping("/addPage")
     public String updatePage(Model model) {
         model.addAttribute("userNumber", new UserNumber());
-
         return "userNumber-form.html";
     }
 
     @GetMapping("/delete/{id}")
     public String deleteNumber(@PathVariable Long id) {
         userNumberService.deleteUserNumber(id);
-        return "redirect:/";
+        return "redirect:/home";
     }
 
     @GetMapping("/update/{id}")
